@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int _collectionValue;
 
     private Vector2 _input;
+
+    public static Action<int> OnCollected = delegate { };
 
     private void Awake()
     {
@@ -33,15 +36,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _body.velocity = _input * _moveSpeed * Time.fixedDeltaTime;
+        _body.velocity = _input.normalized * _moveSpeed * Time.fixedDeltaTime;
     }
 
-    // Discover the searchable item
-    // Check if it has value
-    // Collect it
     private void MetalDecetorSearch()
     {
-        Collider2D[] searchables = Physics2D.OverlapCircleAll(_metalDecetorHead.transform.position, 0.5f, _searchableLayerMask);
+        Collider2D[] searchables = Physics2D.OverlapCircleAll(_metalDecetorHead.transform.position, 0.25f, _searchableLayerMask);
 
         Debug.Log($"Number of searchables found {searchables.Length}");
 
@@ -52,7 +52,9 @@ public class PlayerController : MonoBehaviour
             if(hasValue)
             {
                 _collectionValue += s.ValueAmount;
-                _collectionValue = Mathf.Max(_collectionValue, 0);  
+                _collectionValue = Mathf.Max(_collectionValue, 0);
+                OnCollected(_collectionValue);
+                Destroy(s.gameObject);
             }
         }
     }

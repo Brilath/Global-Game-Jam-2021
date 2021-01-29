@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Searchable : MonoBehaviour
@@ -8,5 +7,5 @@ public class Searchable : MonoBehaviour
     public bool HasValue { get { return _hasValue; } private set { _hasValue = value; } }
 
     [SerializeField] private int _valueAmount;
-    public int ValueAmount { get { return _valueAmount; } private set { _valueAmount = value; } }
+    public int ValueAmount { get { return _valueAmount; } private set { _valueAmount = value; } }    
 }
