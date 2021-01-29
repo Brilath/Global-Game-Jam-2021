@@ -7,9 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D _body;
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private GameObject _metalDecetorHead;
+
+    [SerializeField] private Transform _metalDecetorHead;
     [SerializeField] private LayerMask _searchableLayerMask;
+    [SerializeField] private float _searchDistance;
+
     [SerializeField] private int _collectionValue;
+    [SerializeField] private string _collectableTag;
 
     private Vector2 _input;
 
@@ -29,8 +33,8 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Metal Decetor gogogogo");
-            MetalDecetorSearch();
+            Debug.Log("Dig in the sand!");
+            Search();
         }
     }
 
@@ -39,23 +43,37 @@ public class PlayerController : MonoBehaviour
         _body.velocity = _input.normalized * _moveSpeed * Time.fixedDeltaTime;
     }
 
-    private void MetalDecetorSearch()
+    private void Search()
     {
-        Collider2D[] searchables = Physics2D.OverlapCircleAll(_metalDecetorHead.transform.position, 0.25f, _searchableLayerMask);
-
-        Debug.Log($"Number of searchables found {searchables.Length}");
+        Collider2D[] searchables = Physics2D.OverlapCircleAll(_metalDecetorHead.position, _searchDistance, _searchableLayerMask);
 
         foreach (Collider2D searchable in searchables)
         {
             Searchable s = searchable.GetComponent<Searchable>();
-            bool hasValue = s.HasValue;
-            if(hasValue)
-            {
-                _collectionValue += s.ValueAmount;
-                _collectionValue = Mathf.Max(_collectionValue, 0);
-                OnCollected(_collectionValue);
-                Destroy(s.gameObject);
-            }
+            if (s == null) return;
+            s.Search();            
         }
+    }
+
+    public bool StealCollectables(int amount)
+    {
+        bool isHappy = _collectionValue >= amount ? true : false;
+
+        _collectionValue -= amount;
+        _collectionValue = Mathf.Max(_collectionValue, 0);
+        OnCollected(_collectionValue);
+
+        return isHappy;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Collectable collectable = collision.GetComponent<Collectable>();
+        if (collectable == null) return;
+
+        _collectionValue += collectable.ValueAmount;
+        _collectionValue = Mathf.Max(_collectionValue, 0);
+        OnCollected(_collectionValue);
+        Destroy(collectable.gameObject);
     }
 }
