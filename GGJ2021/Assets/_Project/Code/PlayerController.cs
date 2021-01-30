@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityRandom = UnityEngine.Random;
 using System;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D _body;
+    [SerializeField] private Rigidbody2D _body;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _sadSounds;
     [SerializeField] private float _moveSpeed;
 
     [SerializeField] private Transform _metalDecetorHead;
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -63,6 +67,9 @@ public class PlayerController : MonoBehaviour
         _collectionValue = Mathf.Max(_collectionValue, 0);
         OnCollected(_collectionValue);
 
+        int rand = UnityRandom.Range(0, _sadSounds.Length);
+        _audioSource.PlayOneShot(_sadSounds[rand]);
+
         return isHappy;
     }
 
@@ -74,6 +81,6 @@ public class PlayerController : MonoBehaviour
         _collectionValue += collectable.ValueAmount;
         _collectionValue = Mathf.Max(_collectionValue, 0);
         OnCollected(_collectionValue);
-        Destroy(collectable.gameObject);
+        collectable.Collect();
     }
 }

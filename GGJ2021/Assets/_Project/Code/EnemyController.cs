@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private float _minMoveSpeed;
+    [SerializeField] private float _maxMoveSpeed;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _waitTime;
     [SerializeField] private bool _isWaiting;
@@ -14,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(GetNextPatrolPosition());
+        _moveSpeed = Random.Range(_minMoveSpeed, _maxMoveSpeed);
     }
 
     private void Update()
@@ -22,6 +25,7 @@ public class EnemyController : MonoBehaviour
         if (_isWaiting) return;
 
         _body.position = Vector2.MoveTowards(_body.position, _patrolPath[_currentPatrolIndex].position, _moveSpeed * Time.deltaTime);
+
         if(Vector3.Distance(_body.position, _patrolPath[_currentPatrolIndex].position) <= 0.1f)
         {
             StartCoroutine(GetNextPatrolPosition());

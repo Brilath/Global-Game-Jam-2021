@@ -91,6 +91,14 @@ public class MetalDetectorController : MonoBehaviour
         
         bool foundSearchable = searchables.Length > 0 ? true : false ;
 
+        foreach(Collider2D searchable in searchables)
+        {
+            Searchable s = searchable.GetComponent<Searchable>();
+            if (s == null) continue;
+
+            s.UncoverSearchable();
+        }
+
         return foundSearchable;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Searchable : MonoBehaviour
 {
+
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private float _alphaIncrease;
     [SerializeField] private List<Collectable> _collectables;
     public List<Collectable> Collectables
     {
@@ -12,6 +15,11 @@ public class Searchable : MonoBehaviour
     }
 
     [SerializeField] private List<Transform> _spawnLocations;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Search()
     {
@@ -22,5 +30,10 @@ public class Searchable : MonoBehaviour
             spawnLocation++;
         }
         Destroy(gameObject);
+    }
+
+    public void UncoverSearchable()
+    {
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, _spriteRenderer.color.a +_alphaIncrease);
     }
 }
