@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8747901855377822133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.24, y: -1.61, z: 0}
-  m_LocalScale: {x: 40, y: 40, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 591489801
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: e5a25ebeaeb466a4d9b6f3471628ebb3, type: 3}
+  m_Sprite: {fileID: -2492969444030152484, guid: 5c1f595d25e67bb4c9adde0bbea90a4a,
+    type: 3}
   m_Color: {r: 0.97656333, g: 0.990566, b: 0.046724804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,14 +102,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.01, y: 0.01}
+    oldSize: {x: 4.44, y: 1.65}
     newSize: {x: 0.01, y: 0.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.01}
+  m_Size: {x: 4.52, y: 1.81}
   m_EdgeRadius: 0
 --- !u!82 &2954166964547186874
 AudioSource:
@@ -219,6 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 0}
+  _collider2D: {fileID: 0}
+  _spriteRenderer: {fileID: 0}
   _collectionSounds:
   - {fileID: 8300000, guid: 80adbbf1b27343f42ba01b0b4ae10b81, type: 3}
   - {fileID: 8300000, guid: 2220ba7daf33da84eb50cd46486cff90, type: 3}

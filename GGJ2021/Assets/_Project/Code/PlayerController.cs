@@ -7,6 +7,7 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _body;
+    [SerializeField] private Animator _animator;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip[] _sadSounds;
     [SerializeField] private float _moveSpeed;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -35,7 +37,9 @@ public class PlayerController : MonoBehaviour
 
         _input.Normalize();
 
-        if(Input.GetKeyDown(KeyCode.E))
+        _animator.SetFloat("forwardSpeed", _input.x);
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Dig in the sand!");
             Search();

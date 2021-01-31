@@ -47,6 +47,9 @@ TagManager:
   - name: Searchables
     uniqueID: 591489801
     locked: 0
+  - name: Enemy
+    uniqueID: 380302489
+    locked: 0
   - name: Player
     uniqueID: 3911583225
     locked: 0
